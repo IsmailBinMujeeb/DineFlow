@@ -13,6 +13,7 @@ import { useForm } from "react-hook-form"
 import { useState } from "react"
 import AlertDialog from "@/components/alert-dialog"
 import { useNavigate } from "react-router-dom"
+import { Spinner } from "./ui/spinner"
 
 export function LoginForm({
   className,
@@ -22,8 +23,10 @@ export function LoginForm({
   const { register, handleSubmit } = useForm();
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit = async (data) => {
+    setIsLoading(true);
     let user = {};
     try {
       const response = await fetch(`${import.meta.env.VITE_API_URL}user/login`, {
@@ -39,6 +42,7 @@ export function LoginForm({
     }
 
     if (!user.success) {
+      setIsLoading(false)
       return setError({ title: 'Error', desc: user.message || 'Some error has occured try again letter' })
     }
 
@@ -55,7 +59,7 @@ export function LoginForm({
               <div className="flex flex-col items-center gap-2 text-center">
                 <h1 className="text-2xl font-bold">Welcome back</h1>
                 <p className="text-muted-foreground text-balance">
-                  Login to your Acme Inc account
+                  Login to your DineFlow Inc account
                 </p>
               </div>
               <Field>
@@ -69,7 +73,11 @@ export function LoginForm({
                 <Input id="password" {...register('password')} type="password" required />
               </Field>
               <Field>
-                <Button type="submit">Login</Button>
+                {
+                  isLoading ?
+                    <Button variant={'outline'}><Spinner size={8} /></Button> :
+                    <Button type="submit">Login</Button>
+                }
               </Field>
               {error && <AlertDialog variant="destructive" title={error.title} desc={error.desc} />}
               <FieldSeparator className="*:data-[slot=field-separator-content]:bg-card">
