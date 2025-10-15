@@ -29,4 +29,9 @@ app.get('/api/health', (_, res) => {
     return res.status(200).json({ message: 'Server is healthy' });
 });
 
+// Render's free tier ON
+setInterval(() => {
+    fetch('/api/health').catch(e => console.log(e));
+}, 1000 * 60 * 5);
+
 export default app;
