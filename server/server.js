@@ -31,7 +31,7 @@ app.get('/api/health', (_, res) => {
 
 // Render's free tier ON
 setInterval(() => {
-    fetch('/api/health').catch(e => console.log(e));
+    fetch(`${env.SERVER_URL}/api/health`).catch(e => console.log(e));
 }, 1000 * 60 * 5);
 
 export default app;

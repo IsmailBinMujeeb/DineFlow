@@ -6,6 +6,7 @@ export default {
     PORT: process.env.PORT,
     DB_URI: process.env.DB_URI,
     CORS_ORIGINS: process.env.CORS_ORIGINS?.split(',') || [],
+    SERVER_URL: process.env.SERVER_URL,
     NODE_ENV: process.env.NODE_ENV,
     IS_DEV: process.env.NODE_ENV === 'dev',
 
